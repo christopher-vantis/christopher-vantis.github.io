@@ -1,0 +1,197 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../i18n/utils';
+
+const lang = 'en';
+const i = t(lang);
+
+const experiences = (await getCollection('experience', ({ data }) => data.lang === 'en'))
+  .sort((a, b) => a.data.sortOrder - b.data.sortOrder);
+---
+
+<BaseLayout title={`${i.timeline.title} – Christopher Vantis`} description={i.timeline.description} lang={lang}>
+
+  <section class="section">
+    <div class="container">
+      <header class="page-header">
+        <h1>{i.timeline.title}</h1>
+        <p class="page-header__subtitle">{i.timeline.description}</p>
+      </header>
+
+      <ol class="timeline" role="list">
+        {experiences.map((entry) => (
+          <li class="timeline__item">
+            <div class="timeline__marker" aria-hidden="true"></div>
+            <div class="timeline__content">
+              <span class="timeline__period">{entry.data.period}</span>
+              <h2 class="timeline__title">{entry.data.title}</h2>
+              <p class="timeline__org">{entry.data.organization}</p>
+              {entry.data.project && (
+                <p class="timeline__project">
+                  <strong>Project:</strong> {entry.data.project}
+                </p>
+              )}
+              <p class="timeline__desc">{entry.data.summary}</p>
+              {entry.data.supervisors && (
+                <p class="timeline__supervisors">
+                  Supervision: {entry.data.supervisors}
+                </p>
+              )}
+              <div class="timeline__tags">
+                {entry.data.tags.map((tag) => (
+                  <span class="tag">{tag}</span>
+                ))}
+              </div>
+              <a href={`/en/experience/${entry.id.replace('en/', '').replace(/\.md$/, '')}`} class="timeline__more">
+                {i.timeline.more}
+              </a>
+            </div>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-3xl);
+    max-width: 640px;
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-md);
+  }
+
+  .page-header__subtitle {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .timeline {
+    list-style: none;
+    position: relative;
+    padding-left: var(--space-xl);
+  }
+
+  .timeline::before {
+    content: '';
+    position: absolute;
+    left: 7px;
+    top: 0;
+    bottom: 0;
+    width: 1.5px;
+    background: linear-gradient(to bottom, var(--color-accent-light), var(--color-accent), var(--color-accent-light));
+  }
+
+  .timeline__item {
+    position: relative;
+    padding-bottom: var(--space-2xl);
+  }
+
+  .timeline__item:last-child {
+    padding-bottom: 0;
+  }
+
+  .timeline__marker {
+    position: absolute;
+    left: calc(-1 * var(--space-xl) + 2px);
+    top: 6px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background-color: var(--color-bg-primary);
+    border: 2px solid var(--color-accent);
+    z-index: 1;
+  }
+
+  .timeline__item:first-child .timeline__marker {
+    background-color: var(--color-accent);
+  }
+
+  .timeline__content {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-accent-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-lg) var(--space-xl);
+    transition: box-shadow var(--transition-base);
+  }
+
+  .timeline__content:hover {
+    box-shadow: var(--shadow-md);
+  }
+
+  .timeline__period {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-accent);
+    font-weight: 500;
+  }
+
+  .timeline__title {
+    font-size: 1.25rem;
+    margin-top: var(--space-xs);
+    margin-bottom: var(--space-xs);
+  }
+
+  .timeline__org {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .timeline__project {
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-sm);
+  }
+
+  .timeline__project strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .timeline__desc {
+    font-size: 0.9375rem;
+    line-height: 1.7;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
+  }
+
+  .timeline__supervisors {
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+    font-style: italic;
+    margin-bottom: var(--space-md);
+  }
+
+  .timeline__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+  }
+
+  .timeline__more {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .timeline {
+      padding-left: var(--space-lg);
+    }
+
+    .timeline__content {
+      padding: var(--space-md) var(--space-lg);
+    }
+
+    .timeline__marker {
+      left: calc(-1 * var(--space-lg) + 2px);
+    }
+  }
+</style>

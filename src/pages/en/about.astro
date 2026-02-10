@@ -1,0 +1,326 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { Image } from 'astro:assets';
+import { t } from '../../i18n/utils';
+import portrait from '../../assets/portrait.jpg';
+
+const lang = 'en';
+const i = t(lang);
+---
+
+<BaseLayout title={`${i.about.title} – Christopher Vantis`} description={i.about.description} lang={lang}>
+
+  <section class="section">
+    <div class="container about">
+
+      <header class="page-header">
+        <h1>{i.about.title}</h1>
+      </header>
+
+      <div class="about__grid">
+        <div class="about__photo">
+          <Image
+            src={portrait}
+            alt="Christopher Vantis"
+            width={280}
+            class="about__portrait"
+          />
+        </div>
+
+        <div class="about__text">
+          <p class="about__intro">
+            I'm Christopher, studying Sociology and People-Oriented Computing at the University
+            of Zurich and working as a Research Assistant at the Department of Sociology. I'm driven
+            by the question of how digital systems can be designed to serve as many people as possible.
+          </p>
+          <p>
+            During my studies, I've learned to empirically analyze social phenomena and structures,
+            apply quantitative methods and statistical models to social science research questions,
+            and understand how the interaction between people and digital systems can be researched,
+            designed, and improved. I've been particularly shaped by courses in Human-Computer Interaction,
+            Computational Social Science, Social Computing, and Digital Sociology, where social science
+            thinking and technical tools come together directly.
+          </p>
+          <p>
+            What interests me most: Where do interactions with digital systems need to be better
+            designed so they work for people? And where do we need socially negotiated guardrails
+            so that technological progress doesn't come at the expense of democratic participation
+            and social justice? Good technology doesn't emerge in a vacuum, but always in a social
+            context that must be understood and co-shaped.
+          </p>
+          <p>
+            I love cinema, literature, and I'm a justice enthusiast.
+          </p>
+        </div>
+      </div>
+
+      <!-- Education -->
+      <div class="about__section">
+        <h2>{i.about.education_title}</h2>
+        <div class="education__grid">
+          <div class="education__card education__card--current">
+            <span class="education__degree">Sociology & Computer Science (People Oriented Computing)</span>
+            <span class="education__institution">University of Zurich</span>
+            <span class="education__year">Bachelor 2026</span>
+          </div>
+          <div class="education__card">
+            <span class="education__degree">Acting</span>
+            <span class="education__institution">State University of Music and Performing Arts, Stuttgart</span>
+            <span class="education__year">Bachelor 2018</span>
+          </div>
+          <div class="education__card">
+            <span class="education__degree">Sociology & Political Science</span>
+            <span class="education__institution">Julius Maximilians University, Würzburg</span>
+            <span class="education__year">2013 – 2014</span>
+          </div>
+          <div class="education__card">
+            <span class="education__degree">Sociology & Sports</span>
+            <span class="education__institution">Carl von Ossietzky University, Oldenburg</span>
+            <span class="education__year">2011 – 2013</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Skills -->
+      <div class="about__section">
+        <h2>{i.about.skills_title}</h2>
+        <div class="skills__grid">
+          <div class="skill-group">
+            <h3>Programming</h3>
+            <ul class="skill-list">
+              <li>Python</li>
+              <li>R</li>
+              <li>SQL</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Methods</h3>
+            <ul class="skill-list">
+              <li>Data preparation and cleaning, survey design and analysis</li>
+              <li>Descriptive statistics, inferential statistics, linear and logistic regression, multilevel modeling</li>
+              <li>Data visualization</li>
+            </ul>
+          </div>
+          <div class="skill-group">
+            <h3>Tools & Platforms</h3>
+            <ul class="skill-list">
+              <li>Git & GitHub/GitLab</li>
+              <li>Positron / RStudio</li>
+              <li>Linux</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Certificates -->
+      <div class="about__section">
+        <h2>{i.about.certificates_title}</h2>
+        <div class="certificates">
+          <div class="cert-pills">
+            <span class="cert-pill">Google Data Analytics Professional Certificate</span>
+            <span class="cert-pill">Microsoft Power BI</span>
+            <span class="cert-pill">R: Tidyverse for DataScience</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Engagement -->
+      <div class="about__section">
+        <h2>{i.about.engagement_title}</h2>
+        <div class="engagement__grid">
+          <div class="engagement__card">
+            <h3>Digitale Gesellschaft</h3>
+            <p>Member of the Swiss Digital Society. Advocating for digital rights, data protection, and an open digital society.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-2xl);
+  }
+
+  .about__grid {
+    display: grid;
+    grid-template-columns: 280px 1fr;
+    gap: var(--space-2xl);
+    margin-bottom: var(--space-3xl);
+    align-items: start;
+  }
+
+  .about__portrait {
+    width: 100%;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--color-accent-light);
+  }
+
+  .about__text p {
+    font-size: 1.125rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-lg);
+    line-height: 1.8;
+  }
+
+  .about__section {
+    border-top: 1px solid var(--color-accent-light);
+    padding-top: var(--space-2xl);
+    margin-bottom: var(--space-2xl);
+  }
+
+  .about__section h2 {
+    margin-bottom: var(--space-xl);
+  }
+
+  .education__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .education__card {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-accent-light);
+    border-radius: var(--radius-lg);
+  }
+
+  .education__card--current {
+    border-color: var(--color-accent);
+    background-color: rgba(122, 107, 90, 0.06);
+  }
+
+  .education__degree {
+    display: block;
+    font-weight: 600;
+    color: var(--color-text-primary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .education__institution {
+    display: block;
+    font-size: 0.875rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .education__year {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .skills__grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: var(--space-xl);
+  }
+
+  .skill-group h3 {
+    font-size: 0.8125rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-md);
+  }
+
+  .skill-list {
+    list-style: none;
+  }
+
+  .skill-list li {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    padding-block: var(--space-xs);
+    border-bottom: 1px solid var(--color-bg-secondary);
+  }
+
+  .skill-list li:last-child {
+    border-bottom: none;
+  }
+
+  .certificates {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+  }
+
+  .cert-group h3 {
+    font-size: 0.8125rem;
+    font-family: var(--font-body);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-sm);
+  }
+
+  .cert-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-sm);
+  }
+
+  .cert-pill {
+    font-size: 0.8125rem;
+    font-weight: 500;
+    padding: 6px 14px;
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-accent-light);
+    border-radius: 100px;
+    color: var(--color-text-secondary);
+  }
+
+  .engagement__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .engagement__card {
+    padding: var(--space-lg);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-accent-light);
+    border-radius: var(--radius-lg);
+  }
+
+  .engagement__card h3 {
+    font-size: 1.125rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .engagement__card p {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.65;
+  }
+
+  @media (max-width: 768px) {
+    .about__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .about__portrait {
+      max-width: 200px;
+      margin-inline: auto;
+    }
+
+    .education__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .skills__grid {
+      grid-template-columns: 1fr;
+    }
+
+    .engagement__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

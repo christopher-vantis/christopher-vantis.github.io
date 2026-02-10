@@ -1,0 +1,83 @@
+---
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import '../styles/global.css';
+import { getLocalePath, getAlternateLang } from '../i18n/utils';
+
+const {
+  title = 'Christopher Vantis – Portfolio',
+  description = 'Soziologe & Informatiker – Forschung, Datenanalyse, Projekte',
+  lang = 'de'
+} = Astro.props;
+
+const currentPath = Astro.url.pathname;
+const altLang = getAlternateLang(lang);
+const altPath = getLocalePath(currentPath, altLang);
+const siteUrl = 'https://christopher-vantis.github.io';
+---
+
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <link rel="alternate" hreflang={lang} href={`${siteUrl}${currentPath}`} />
+    <link rel="alternate" hreflang={altLang} href={`${siteUrl}${altPath}`} />
+
+    <script type="application/ld+json" set:html={JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Christopher Vantis",
+      "url": siteUrl,
+      "jobTitle": "Sociologist & Computer Scientist",
+      "affiliation": {
+        "@type": "Organization",
+        "name": "University of Zurich"
+      },
+      "email": "c.vantis@proton.me",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Zurich",
+        "addressCountry": "CH"
+      },
+      "sameAs": [
+        "https://www.linkedin.com/in/christopher-vantis-88b01229a",
+        "https://github.com/christopher-vantis"
+      ]
+    })} />
+  </head>
+
+  <body>
+    <div class="page-wrapper">
+      <Header lang={lang} />
+
+      <main>
+        <slot />
+      </main>
+
+      <Footer lang={lang} />
+    </div>
+  </body>
+</html>
+
+<style is:global>
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    min-height: 100dvh;
+  }
+
+  main {
+    flex: 1;
+  }
+</style>

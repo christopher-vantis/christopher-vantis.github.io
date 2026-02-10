@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../i18n/utils';
+
+const lang = 'de';
+const i = t(lang);
+
+export async function getStaticPaths() {
+  const entries = await getCollection('experience', ({ data }) => data.lang === 'de');
+  return entries.map((entry) => ({
+    params: { slug: entry.id.replace('de/', '').replace(/\.md$/, '') },
+    props: { entry },
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await entry.render();
+---
+
+<BaseLayout title={`${entry.data.title} – Christopher Vantis`} description={entry.data.summary} lang={lang}>
+
+  <section class="section">
+    <div class="container experience-detail">
+
+      <a href="/timeline" class="back-link">{i.experience.back}</a>
+
+      <header class="experience-header">
+        <span class="experience-header__period">{entry.data.period}</span>
+        <h1>{entry.data.title}</h1>
+        <p class="experience-header__org">{entry.data.organization}</p>
+        {entry.data.project && (
+          <p class="experience-header__meta">
+            <strong>{i.experience.project}:</strong> {entry.data.project}
+          </p>
+        )}
+        {entry.data.supervisors && (
+          <p class="experience-header__meta">
+            <strong>{i.experience.supervisors}:</strong> {entry.data.supervisors}
+          </p>
+        )}
+      </header>
+
+      <div class="prose">
+        <Content />
+      </div>
+
+      <div class="experience-tags">
+        {entry.data.tags.map((tag) => (
+          <span class="tag">{tag}</span>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .experience-detail {
+    max-width: 48rem;
+  }
+
+  .experience-header {
+    margin-bottom: var(--space-2xl);
+    padding-bottom: var(--space-xl);
+    border-bottom: 1px solid var(--color-accent-light);
+  }
+
+  .experience-header__period {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    color: var(--color-accent);
+    font-weight: 500;
+    display: block;
+    margin-bottom: var(--space-sm);
+  }
+
+  .experience-header h1 {
+    margin-bottom: var(--space-sm);
+  }
+
+  .experience-header__org {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-md);
+  }
+
+  .experience-header__meta {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    margin-bottom: var(--space-xs);
+  }
+
+  .experience-header__meta strong {
+    color: var(--color-text-primary);
+    font-weight: 600;
+  }
+
+  .experience-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-top: var(--space-2xl);
+    padding-top: var(--space-xl);
+    border-top: 1px solid var(--color-accent-light);
+  }
+</style>

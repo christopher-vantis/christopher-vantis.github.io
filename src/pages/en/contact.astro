@@ -1,0 +1,105 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { t } from '../../i18n/utils';
+
+const lang = 'en';
+const i = t(lang);
+---
+
+<BaseLayout title={`${i.contact.title} – Christopher Vantis`} description={i.contact.description} lang={lang}>
+
+  <section class="section">
+    <div class="container contact">
+
+      <header class="page-header">
+        <h1>{i.contact.title}</h1>
+      </header>
+
+      <div class="contact__methods">
+        <a href="mailto:c.vantis@proton.me" class="contact__card">
+          <span class="contact__card-label">{i.contact.email}</span>
+          <span class="contact__card-value">c.vantis@proton.me</span>
+        </a>
+
+        <a href="tel:+41766072137" class="contact__card">
+          <span class="contact__card-label">{i.contact.phone}</span>
+          <span class="contact__card-value">+41 76 607 21 37</span>
+        </a>
+
+        <a href="https://www.linkedin.com/in/christopher-vantis-88b01229a" target="_blank" rel="noopener" class="contact__card">
+          <span class="contact__card-label">{i.contact.linkedin}</span>
+          <span class="contact__card-value">linkedin.com/in/christopher-vantis</span>
+        </a>
+
+        <a href="https://github.com/christopher-vantis" target="_blank" rel="noopener" class="contact__card">
+          <span class="contact__card-label">{i.contact.github}</span>
+          <span class="contact__card-value">github.com/christopher-vantis</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-2xl);
+    max-width: 540px;
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-md);
+  }
+
+  .page-header__subtitle {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .contact__methods {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-md);
+  }
+
+  .contact__card {
+    display: block;
+    padding: var(--space-lg) var(--space-xl);
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-accent-light);
+    border-radius: var(--radius-lg);
+    text-decoration: none;
+    color: inherit;
+    transition: all var(--transition-base);
+  }
+
+  .contact__card:hover {
+    border-color: var(--color-accent);
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+    color: inherit;
+  }
+
+  .contact__card-label {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--color-accent);
+    margin-bottom: var(--space-xs);
+  }
+
+  .contact__card-value {
+    font-size: 1rem;
+    color: var(--color-text-primary);
+  }
+
+  @media (max-width: 768px) {
+    .contact__methods {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

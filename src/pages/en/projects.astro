@@ -1,0 +1,140 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getCollection } from 'astro:content';
+import { t } from '../../i18n/utils';
+
+const lang = 'en';
+const i = t(lang);
+
+const allProjects = await getCollection('projects', ({ data }) => data.lang === 'en');
+const projects = allProjects.sort((a, b) => b.data.year.localeCompare(a.data.year));
+---
+
+<BaseLayout title={`${i.projects.title} – Christopher Vantis`} description={i.projects.description} lang={lang}>
+
+  <section class="section">
+    <div class="container">
+
+      <header class="page-header">
+        <h1>{i.projects.title}</h1>
+        <p class="page-header__subtitle">{i.projects.description}</p>
+      </header>
+
+      <div class="projects__grid">
+        {projects.map((project) => (
+          <article class="project-card">
+            <div class="project-card__header">
+              <span class="project-card__type">{project.data.type}</span>
+              <span class="project-card__year">{project.data.year}</span>
+            </div>
+            <h2 class="project-card__title">{project.data.title}</h2>
+            <p class="project-card__desc">{project.data.summary}</p>
+            <div class="project-card__tags">
+              {project.data.tags.map((tag) => (
+                <span class="tag">{tag}</span>
+              ))}
+            </div>
+            {project.data.link && (
+              <a href={project.data.link} target="_blank" rel="noopener" class="project-card__link">
+                {project.data.link.endsWith('.pdf') ? 'PDF →' : 'GitHub →'}
+              </a>
+            )}
+          </article>
+        ))}
+      </div>
+
+    </div>
+  </section>
+
+</BaseLayout>
+
+<style>
+  .page-header {
+    margin-bottom: var(--space-3xl);
+    max-width: 640px;
+  }
+
+  .page-header h1 {
+    margin-bottom: var(--space-md);
+  }
+
+  .page-header__subtitle {
+    font-size: 1.0625rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+  }
+
+  .projects__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: var(--space-lg);
+  }
+
+  .project-card {
+    background-color: var(--color-bg-card);
+    border: 1px solid var(--color-accent-light);
+    border-radius: var(--radius-lg);
+    padding: var(--space-xl);
+    transition: all var(--transition-base);
+  }
+
+  .project-card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
+  }
+
+  .project-card__header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--space-md);
+  }
+
+  .project-card__type {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--color-accent);
+    background-color: var(--color-bg-secondary);
+    padding: 3px 10px;
+    border-radius: 100px;
+  }
+
+  .project-card__year {
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    color: var(--color-text-muted);
+  }
+
+  .project-card__title {
+    font-size: 1.25rem;
+    margin-bottom: var(--space-sm);
+  }
+
+  .project-card__desc {
+    font-size: 0.9375rem;
+    color: var(--color-text-secondary);
+    line-height: 1.7;
+    margin-bottom: var(--space-md);
+  }
+
+  .project-card__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs);
+    margin-bottom: var(--space-md);
+  }
+
+  .project-card__link {
+    font-size: 0.8125rem;
+    font-weight: 600;
+    color: var(--color-accent);
+  }
+
+  @media (max-width: 768px) {
+    .projects__grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
