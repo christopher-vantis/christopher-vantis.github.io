@@ -2,7 +2,7 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-  site: 'https://christopher-vantis.github.io',
+  site: 'https://christopher-vantis.ch',
   output: 'static',
   i18n: {
     defaultLocale: 'de',
