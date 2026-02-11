@@ -35,8 +35,12 @@ const projects = allProjects.sort((a, b) => b.data.year.localeCompare(a.data.yea
               ))}
             </div>
             {project.data.link && (
-              <a href={project.data.link} target="_blank" rel="noopener" class="project-card__link">
-                {project.data.link.endsWith('.pdf') ? 'PDF →' : 'GitHub →'}
+              <a
+                href={project.data.link}
+                class="project-card__link"
+                {...(project.data.link.endsWith('.pdf') ? { download: '' } : { target: '_blank', rel: 'noopener' })}
+              >
+                {project.data.link.endsWith('.pdf') ? 'PDF herunterladen ↓' : 'GitHub →'}
               </a>
             )}
           </article>
